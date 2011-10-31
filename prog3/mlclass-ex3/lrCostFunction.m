@@ -60,9 +60,9 @@ grad = zeros(size(theta));
 
 	
 		
-	reg2= (lambda / (2*m-1)) * sum(theta([2:end]).^2)
+	reg2= (lambda / (2*m-1)) * sum(theta([2:end]).^2);
 	%reg2= (lambda/(2*m))*norm(theta([2:end]))^2
-	J= (1/m)*sum(J) + reg2
+	J= (1/m)*sum(J) + reg2;
 
 
 
