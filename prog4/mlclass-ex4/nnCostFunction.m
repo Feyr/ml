@@ -62,47 +62,71 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+
+%%% cost function
 y2=y;
-% make the output layer from the result
+% make the output layer from the result. since our result contains the INDEX of the highest result
 for i = 1:num_labels
 	y(:,i) = y2 == i;
 end
 
 
 
+
 % feed forward:
+% and cost function
+
 X = [ ones(m,1) X ];
-a2= sigmoid(X*Theta1');
+z2=X*Theta1';
+a2= sigmoid(z2);
 
 % add intercept to a2
 a2 = [ ones(size(a2),1) a2 ];
-a3= sigmoid(a2 * Theta2');
+z3=a2 * Theta2';
+a3= sigmoid(z3);
 
-%J=(-y.*log(h)) - ((1 - y).*log(1-h));
 J=(-y.*log(a3)) - ((1 - y).*log(1-a3));
 		
-reg2= (lambda / (2*m-1)) * sum(Theta1([2:end]).^2);
-	%reg2= (lambda/(2*m))*norm(theta([2:end]))^2
-J= (1/m)*sum(sum(J)) + reg2;
-	
-%{
-X = [ ones(m,1) X ];
-a2= sigmoid(X*Theta1');
-a2 = [ ones(size(a2),1) a2 ];
-a3= sigmoid(a2 * Theta2');
-%}
+
+t1noI= Theta1(:,2:end);
+regt1= sum(sum(t1noI.^2));
+t2noI= Theta2(:,2:end);
+regt2= sum(sum(t2noI.^2));
+reg= (lambda / (2*m)) * (regt1 + regt2);
+
+J= (1/m)*sum(sum(J)) + reg;
+
+clear t*
+clear reg*	
+clear z*
+clear i
+%%%%%  end costfunction
+
+
+%delta3 - output layer - actual value     (this would be delta4 in video, if we had 2 hidden layers)
+delta3 = a3 - y;
+
+%delta2 - hidden layer (delta3 if we had 2 hidden layers, as per video)
+delta2 =  (delta3 *Theta2) .* (a2 .* (1-a2));
+%possible d2: step 3 has delta2 = Theta2' * delta3 .* sigmoidGradient(z2)
 
 
 
+%for i = 1:m
+	Theta2_grad=(1/m)*(a2'*delta3)';
+	Theta1_grad=(1/m)*(X'*delta2)';
+%end
+
+% remove the intercept term
+Theta1_grad = Theta1_grad(2:end,:);
 
 
+%a2 has rows with neurons and columns with training exemple
+
+%Theta1(1,:)
 
 
-
-
-
-
-
+%whos
 
 
 
