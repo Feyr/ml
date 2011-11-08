@@ -66,10 +66,11 @@ Theta2_grad = zeros(size(Theta2));
 %%% cost function
 y2=y;
 % make the output layer from the result. since our result contains the INDEX of the highest result
-for i = 1:num_labels
-	y(:,i) = y2 == i;
-end
 
+temp1=ones(m,1) * [1:num_labels];
+temp2=y2*ones(1,num_labels)
+y=(temp1==temp2);
+clear temp*
 
 
 
