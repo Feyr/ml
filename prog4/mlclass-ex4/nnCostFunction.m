@@ -68,7 +68,7 @@ y2=y;
 % make the output layer from the result. since our result contains the INDEX of the highest result
 
 temp1=ones(m,1) * [1:num_labels];
-temp2=y2*ones(1,num_labels)
+temp2=y2*ones(1,num_labels);
 y=(temp1==temp2);
 clear temp*
 
@@ -98,7 +98,7 @@ reg= (lambda / (2*m)) * (regt1 + regt2);
 J= (1/m)*sum(sum(J)) + reg;
 
 clear t*
-clear reg*	
+%clear reg*	
 clear z*
 clear i
 %%%%%  end costfunction
@@ -121,17 +121,23 @@ delta2 =  (delta3 *Theta2) .* (a2 .* (1-a2));
 % remove the intercept term
 Theta1_grad = Theta1_grad(2:end,:);
 
-
-%a2 has rows with neurons and columns with training exemple
-
-%Theta1(1,:)
-
-
 %whos
 
 
+%regdelta2= (1/m)*delta2;
+%regdelta2= regdelta2 + (lambda/m).*Theta2(:,2:end)
+%regdelta2 = (lambda/m).*(Theta2(:,2:end)*Theta2(:,2:end)'); 
+%regdelta2 = (lambda/m).*(Theta2(:,2:end)*Theta2(:,2:end)'); 
+%size(Theta1)
+Theta1(:,1)=0;
+Theta2(:,1)=0;
 
 
+regdelta1=  (lambda/m).*(Theta1);
+regdelta2=  (lambda/m).*(Theta2);
+%whos
+Theta1_grad= Theta1_grad + regdelta1;
+Theta2_grad= Theta2_grad + regdelta2;
 
 
 
