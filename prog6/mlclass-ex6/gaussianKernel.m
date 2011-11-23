@@ -14,7 +14,12 @@ sim = 0;
 %               and x2 computed using a Gaussian kernel with bandwidth
 %               sigma
 %
-%
+xZ= x1-x2;
+
+vl= sqrt(sum(xZ .^ 2)).^2;
+sim= 0-(vl/(2*sigma^2));
+sim= exp(sim);
+
 
 
 
