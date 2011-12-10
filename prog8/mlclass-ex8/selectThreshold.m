@@ -11,6 +11,8 @@ bestF1 = 0;
 F1 = 0;
 
 stepsize = (max(pval) - min(pval)) / 1000;
+
+
 for epsilon = min(pval):stepsize:max(pval)
     
     % ====================== YOUR CODE HERE ======================
@@ -24,15 +26,22 @@ for epsilon = min(pval):stepsize:max(pval)
     %       of 0's and 1's of the outlier predictions
 
 
+%{
+   at af
+pt tp fp
+pf fn tn
+%}
+pred= pval < epsilon;
 
+ntp= sum([ yval==1 & yval == pred ]);
+nfp = sum([ pred > yval ]);
 
+nfn = sum([ pred < yval ]);
 
+precision = ntp / (ntp+nfp);
+recall = ntp / (ntp+nfn);
 
-
-
-
-
-
+F1= (2*precision*recall)/(precision+recall);
 
 
     % =============================================================

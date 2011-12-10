@@ -41,18 +41,28 @@ Theta_grad = zeros(size(Theta));
 %
 
 
+for j = 1:num_users
+	for i = 1:num_movies
+		if (R(i,j) == 1)
+			a= X(i,:)*Theta(j,:)';
+			b= a- Y(i,j);
+			c=b.^2;
+			d=sum(c(:));
+			J=J+d
+		end
+		
+	end
+end
+J=(1/(2))*J
+
+Theta*X' .*R'
+sum(X*Theta' .* R - Y)
+return
 
 
-
-
-
-
-
-
-
-
-
-
+J=(1/2)*sum(sum((X*Theta'.*R-Y).^2));
+reg=(lambda/2)*sum(sum(X).^2);
+J=J+reg
 
 
 % =============================================================
