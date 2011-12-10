@@ -61,22 +61,33 @@ end
 nonVJ=(1/(2))*nonVJ;
 %}
 
-
+%cost
 VJ=(1/2)*sum(sum((X*Theta'.*(R==1)- Y ).^2));
 
-%reg=(lambda/2)*sum(sum(X).^2);
-%J=J+reg
+%reg X
+regX=(lambda/2)*sum(sum(X.^2)); 
+%reg Theta
+regT=(lambda/2)*sum(sum(Theta.^2)); 
+VJ=VJ+regX+regT;
+
+
+
 J=VJ;
 
 %J=nonVJ;
 %J=VJ;
 
 %%grad
-pgrad= X * Theta' .* R - Y 
+pgrad= X * Theta' .* R - Y ;
 vX_grad =  pgrad  * Theta ;
 vTheta_grad= pgrad'  * X;
-vX_grad
-vTheta_grad
+%reg X
+regGX = lambda*X;
+vX_grad= bsxfun(@plus,vX_grad,regGX);
+%reg T
+regGT = lambda*Theta;
+vTheta_grad= bsxfun(@plus,vTheta_grad,regGT);
+
 
 X_grad= vX_grad;
 Theta_grad= vTheta_grad;
