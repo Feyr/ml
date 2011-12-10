@@ -6,6 +6,7 @@ function visualizeFit(X, mu, sigma2)
 %
 
 [X1,X2] = meshgrid(0:.5:35); 
+
 Z = multivariateGaussian([X1(:) X2(:)],mu,sigma2);
 Z = reshape(Z,size(X1));
 
