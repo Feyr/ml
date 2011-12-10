@@ -40,7 +40,7 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
-
+Y=(Y.*R);
 %{
 nonVJ=0;
 VJ=0;
@@ -62,7 +62,7 @@ nonVJ=(1/(2))*nonVJ;
 %}
 
 
-VJ=(1/2)*sum(sum((X*Theta'.*(R==1)- (Y .* R)).^2));
+VJ=(1/2)*sum(sum((X*Theta'.*(R==1)- Y ).^2));
 
 %reg=(lambda/2)*sum(sum(X).^2);
 %J=J+reg
@@ -72,7 +72,7 @@ J=VJ;
 %J=VJ;
 
 %%grad
-pgrad= X * Theta' .* R - (Y .* R)
+pgrad= X * Theta' .* R - Y 
 vX_grad =  pgrad  * Theta ;
 vTheta_grad= pgrad'  * X;
 vX_grad
